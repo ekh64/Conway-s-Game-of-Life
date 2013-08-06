@@ -1,14 +1,20 @@
-//Erica Hyman 6-26-12
+//Erica Hyman 7/31/2013
 
-var size = 10;
+var size = 25;
+var genCount = 0;
 var board;
 
-/* Commented out, incomplete due to time
-function setSize(){
-	size = document.getElemementById("s").value;
-}*/
 
 function init(){
+
+/*
+	genCount = 0;
+	var t = "Generation "+genCount;
+	
+	$("#genCount").html(t);
+*/
+	var text = "";
+	
 	if(!size){
 		size = 3;
 	}
@@ -16,22 +22,53 @@ function init(){
 	for(var i=0;i<size;i++){
 		board[i] = new Array(size);
 		for(var j=0;j<size;j++){
-			board[i][j] = Math.floor(( Math.random() * 10) % 2) //generates a random value for the cell
-			//board[i][j] = 0;
-		}
-	}
-	print();	
-}
-
-function print(){
-	var text = "";
-	for(var i=0;i<size;i++){
-		for(var j=0;j<size;j++){
-			text += " "+ board[i][j];
+			board[i][j] = 0;
+			//board[i][j] = Math.floor(( Math.random() * 100) % 2) //generates a random value for the cell
+			text += "<span id='x"+i+"y"+j+"' onclick='toggle("+i+","+j+")'></span>";
 		}
 		text+= "<br/>"
 	}
-	document.getElementById("board").innerHTML = text;
+	/*
+	var r = Math.floor((Math.random() * 1000) % 255);
+	var g = Math.floor((Math.random() * 1000) % 255);
+	var b = Math.floor((Math.random() * 1000) % 255);
+	var rgb = "rgb("+r+","+g+","+b+")";
+	$(".alive").css("background-color",rgb);
+	*/
+	$("#board").html(text);
+
+	var temp = null;
+	$("#anibutton").click(function(){
+		if(temp!=null){ //timer is started
+			clearTimeout(temp);
+			temp = null;
+			$(this).text("Animate");
+		}
+		else{
+			temp = setInterval("nextGen()", 300);
+			$(this).text("Stop");
+		}
+	});
+
+	print();	
+}
+
+function toggle(i,j){
+	if(board[i][j] == 0)
+		board[i][j] = 1;
+	else
+		board[i][j] = 0;
+	print();
+
+}
+
+function print(){
+	for(var i=0;i<size;i++){
+		for(var j=0;j<size;j++){
+			createBox(i,j);	
+		}
+	}
+
 }
 
 function copyB(b){ //copies board b to a new board, temp;
@@ -45,7 +82,7 @@ function copyB(b){ //copies board b to a new board, temp;
 	return temp;
 }
 
-function nextGen(){
+function nextGen(){ //uncaught error
 	var copy = copyB(board);
 	for(var i = 0; i<size;i++){
 		for(var j = 0; j < size; j++){
@@ -63,8 +100,28 @@ function nextGen(){
 			}	
 		}
 	}
+
 	board = copyB(copy); //transfer modified board into masterboard
+	genCount++;
+	//var t = "Generation "+genCount;
+	//$("#genCount").html(t);
 	print();
+}
+
+function createBox(i,j){
+		var sp = "#x"+i+"y"+j;
+		if(board[i][j] == 1) {
+			if(!($(sp).hasClass("alive")))
+				$(sp).addClass("alive");
+			if($(sp).hasClass("dead"))
+				$(sp).removeClass("dead");
+		} 
+		else {
+			if(!($(sp).hasClass("dead")))
+				$(sp).addClass("dead");
+			if($(sp).hasClass("alive"))
+				$(sp).removeClass("alive");
+		}		
 }
 
 function calcNeighbor(i,j){ //calculates the number of alive neighbors

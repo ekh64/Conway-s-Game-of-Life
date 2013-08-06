@@ -4,15 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
+	<LINK href="gol_style.css" rel="stylesheet" type="text/css">
 	<title>Game of Life</title>
 	<script src="gol.js" type="text/javascript"></script>
-	
+	<script src="jquery-2.0.3.min.js" type="text/javascript"></script>
 </head>
 
 <body>
-	<button onclick="init()">Start</button>
+	<button onclick="init()">New Game</button>
 	<div id="board"></div>
+	<button id="anibutton">Animate</button>
 	<button onclick="nextGen()">Next Generation</button>
+	<div id="genCount"></div>
 </body>
 </html>
