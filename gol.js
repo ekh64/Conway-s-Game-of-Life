@@ -109,7 +109,7 @@ function nextGen(){ //uncaught error
 }
 
 function createBox(i,j){
-		var sp = "#x"+i+"y"+j;
+		var sp = "#r"+i+"c"+j;
 		if(board[i][j] == 1) {
 			if(!($(sp).hasClass("alive")))
 				$(sp).addClass("alive");
