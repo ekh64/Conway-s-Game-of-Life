@@ -24,7 +24,7 @@ function init(){
 		for(var j=0;j<size;j++){
 			board[i][j] = 0;
 			//board[i][j] = Math.floor(( Math.random() * 100) % 2) //generates a random value for the cell
-			text += "<span id='x"+i+"y"+j+"' onclick='toggle("+i+","+j+")'></span>";
+			text += "<span id='r"+i+"c"+j+"' onclick='toggle("+i+","+j+")'></span>";
 		}
 		text+= "<br/>"
 	}
